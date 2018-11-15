@@ -8,4 +8,4 @@ Automatically monitor OTS Presseportal for new public service press releases (po
 ## Presseportal API
 Full documentation: https://api.presseportal.de/doc/
 
-*This software is a hobby project and in no way affiliated to presseportal.de / news aktuell GmbH*
+*This software is a hobby project and in no way affiliated with presseportal.de / news aktuell GmbH*
