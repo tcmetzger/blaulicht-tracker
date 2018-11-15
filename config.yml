@@ -1,0 +1,8 @@
+---
+
+# Which states to track
+# Possible values: one of the ones listet at https://api.presseportal.de/doc/value/region
+STATE_FILTER:
+  - nrw
+
+#ToDo: update-db so anpassen, dass mehr als nur ein Staat gleichzeitig abgefragt werden kann
