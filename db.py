@@ -42,7 +42,7 @@ def store_in_db(story):
 def get_from_db(id):
     """
     Retrieve story from db based on id
-    Return: story as dict/json
+    Return: story as dict (return warning message if no story is found)
     """
     if db.stories.find_one({'id': id}):
         return db.stories.find_one({'id': id})
