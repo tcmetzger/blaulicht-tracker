@@ -6,8 +6,9 @@ import json
 from pymongo import MongoClient
 
 OTS_API_KEY = os.environ['OTS_API_KEY']
+DB_URI = os.environ['DB_URI']
 
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient(DB_URI)
 db = client.ots_database
 collection = db.ots_collection
 
