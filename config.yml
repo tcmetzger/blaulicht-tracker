@@ -11,3 +11,8 @@ STATE_FILTER:
 # Possible values: int (seconds)
 DELAY:
   - 300
+
+# Amount of stories to download per api call
+# Possible values: any number between 1 and 50 (maximum accepted number by api is 50)
+DOWNLOAD_LIMIT:
+  - 50

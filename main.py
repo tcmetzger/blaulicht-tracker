@@ -2,12 +2,12 @@
 
 import time
 
-from config import STATE_FILTER, DELAY
+from config import STATE_FILTER, DELAY, DOWNLOAD_LIMIT
 import db
 
 if __name__ == '__main__':
     while True:
-        new_stories=db.update(STATE_FILTER)
+        new_stories=db.update(STATE_FILTER, DOWNLOAD_LIMIT)
         if len(new_stories) > 0:
             print(f'Found new stories: {new_stories}:')
             for item in new_stories:

@@ -7,3 +7,4 @@ with open('config.yml', 'r') as fp:
 
 STATE_FILTER = CONFIG['STATE_FILTER']
 DELAY = int(CONFIG['DELAY'][0])
+DOWNLOAD_LIMIT = CONFIG['DOWNLOAD_LIMIT'][0]

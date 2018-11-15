@@ -51,14 +51,14 @@ def get_from_db(id):
         return message
 
 
-def update (region):
+def update (region, limit):
     """
     Generate API-URL, download stories and store new stories in db
     return: A list of ids of new items
     ToDo: Accept more than one region (currently only first region in list of regions)
     """
     region = region[0].lower()  #region always has to be lowercase. Currently only considering first region provided
-    API_URL = f'https://api.presseportal.de/api/article/publicservice/region/{region}?api_key={OTS_API_KEY}&format=json&limit=30'
+    API_URL = f'https://api.presseportal.de/api/article/publicservice/region/{region}?api_key={OTS_API_KEY}&format=json&limit={limit}'
 
     api_data = load_api_data(API_URL)
 
