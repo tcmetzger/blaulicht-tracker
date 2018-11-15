@@ -39,6 +39,18 @@ def store_in_db(story):
         db.stories.insert_one(story)
         return True
 
+def get_from_db(id):
+    """
+    Retrieve story from db based on id
+    Return: story as dict/json
+    """
+    if db.stories.find_one({'id': id}):
+        return db.stories.find_one({'id': id})
+    else:
+        message = f'No story with id {id} found!'
+        return message
+
+
 def update (region):
     """
     Generate API-URL, download stories and store new stories in db
