@@ -6,3 +6,4 @@ with open('config.yml', 'r') as fp:
     CONFIG = yaml.safe_load(fp.read())
 
 STATE_FILTER = CONFIG['STATE_FILTER']
+DELAY = int(CONFIG['DELAY'][0])

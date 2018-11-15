@@ -6,3 +6,8 @@ STATE_FILTER:
   - nrw
 
 #ToDo: update-db so anpassen, dass mehr als nur ein Staat gleichzeitig abgefragt werden kann
+
+# Polling rate for checking api
+# Possible values: int (seconds)
+DELAY:
+  - 300

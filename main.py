@@ -1,9 +1,12 @@
 #!/user/bin/env python3.6
 
-# imports go here
+import time
 
-from config import STATE_FILTER
+from config import STATE_FILTER, DELAY
 import db
 
 if __name__ == '__main__':
-    db.update(STATE_FILTER)
+    while True:
+        db.update(STATE_FILTER)
+        print(f'Sleeping for {DELAY} seconds.')
+        time.sleep(DELAY)
