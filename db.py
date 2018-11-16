@@ -67,9 +67,9 @@ def update (region, limit):
     for story in api_data['content']['story']:
         story_title = story['title'].replace('\n', ' ').replace('\r', '')
         if store_in_db(story):
-            print (f'Added to db: "{story_title}"')
+            #print (f'Added to db: "{story_title}"')
             new_stories.add(story['id'])
-        else:
-            print(f'Already in db: "{story_title}"')
+        #else:
+            #print(f'Already in db: "{story_title}"')
 
     return new_stories 
