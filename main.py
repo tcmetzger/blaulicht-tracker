@@ -14,7 +14,8 @@ if __name__ == '__main__':
             for item in new_stories:
                 story = db.get_from_db(item)
                 datetime_published = datetime.strptime(story['published'], '%Y-%m-%dT%H:%M:%S%z')
-                print(f'{datetime_published.strftime("%d.%m.%Y %H:%M:%S")} {story["title"]} ({story["url"]})')
+                story_title = story['title'].replace('\n', ' ').replace('\r', '')
+                print(f'{datetime_published.strftime("%d.%m.%Y %H:%M:%S")} {story_title} ({story["url"]})')
         else:
             print('No new stories found.')
         print(f'Sleeping for {DELAY} seconds.')
