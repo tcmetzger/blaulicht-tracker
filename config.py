@@ -6,5 +6,5 @@ with open('config.yml', 'r') as fp:
     CONFIG = yaml.safe_load(fp.read())
 
 STATE_FILTER = CONFIG['STATE_FILTER']
-DELAY = int(CONFIG['DELAY'][0])
-DOWNLOAD_LIMIT = CONFIG['DOWNLOAD_LIMIT'][0]
+DELAY = int(CONFIG['DELAY'])
+DOWNLOAD_LIMIT = CONFIG['DOWNLOAD_LIMIT']
