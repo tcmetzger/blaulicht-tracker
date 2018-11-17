@@ -21,7 +21,7 @@ def load_api_data (API_URL):
     #actual download
     with urllib.request.urlopen(API_URL) as url:
         api_data = json.loads(url.read().decode())
-        
+
     #testing data
     ##with open('nrw.json', 'r') as testing_set:
     ##    api_data = json.load(testing_set)
@@ -60,16 +60,21 @@ def update (region, limit):
     region = region[0].lower()  #region always has to be lowercase. Currently only considering first region provided
     API_URL = f'https://api.presseportal.de/api/article/publicservice/region/{region}?api_key={OTS_API_KEY}&format=json&limit={limit}'
 
-    api_data = load_api_data(API_URL)
-
-    new_stories = set()
+    try:  #  In case api returns an empty doc and JSONDecodeError occurs: skip this polling cycle
+        api_data = load_api_data(API_URL)
+        
+        new_stories = set()
+        
+        for story in api_data['content']['story']:
+            story_title = story['title'].replace('\n', ' ').replace('\r', '')
+            if store_in_db(story):
+                #print (f'Added to db: "{story_title}"')
+                new_stories.add(story['id'])
+            #else:
+                #print(f'Already in db: "{story_title}"')
     
-    for story in api_data['content']['story']:
-        story_title = story['title'].replace('\n', ' ').replace('\r', '')
-        if store_in_db(story):
-            #print (f'Added to db: "{story_title}"')
-            new_stories.add(story['id'])
-        #else:
-            #print(f'Already in db: "{story_title}"')
+    except JSONDecodeError as e:
+        print(e)
+        new_stories = 0
 
     return new_stories 
