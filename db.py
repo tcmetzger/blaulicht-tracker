@@ -5,6 +5,8 @@ import urllib.request
 import json
 from pymongo import MongoClient
 
+from helpers.log_to_logfile import add_to_log
+
 OTS_API_KEY = os.environ['OTS_API_KEY']
 DB_URI = os.environ['DB_URI']
 
@@ -75,6 +77,7 @@ def update (region, limit):
     
     except JSONDecodeError as e:
         print(e)
+        add_to_log(e, 'error')
         new_stories = 0
 
     return new_stories 
