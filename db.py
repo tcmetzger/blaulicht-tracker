@@ -62,10 +62,10 @@ def update (region, limit):
     region = region[0].lower()  #region always has to be lowercase. Currently only considering first region provided
     API_URL = f'https://api.presseportal.de/api/article/publicservice/region/{region}?api_key={OTS_API_KEY}&format=json&limit={limit}'
 
+    new_stories = set()
+
     try:  #  In case api returns an empty doc and JSONDecodeError occurs: skip this polling cycle
         api_data = load_api_data(API_URL)
-        
-        new_stories = set()
         
         for story in api_data['content']['story']:
             story_title = story['title'].replace('\n', ' ').replace('\r', '')
