@@ -56,7 +56,7 @@ def get_from_db(id):
 def update (region, limit):
     """
     Generate API-URL, download stories and store new stories in db
-    return: A list of ids of new items
+    return: A list of ids of new items (list is empty if nothing new discovered)
     ToDo: Accept more than one region (currently only first region in list of regions)
     """
     region = region[0].lower()  #region always has to be lowercase. Currently only considering first region provided
@@ -75,9 +75,8 @@ def update (region, limit):
             #else:
                 #print(f'Already in db: "{story_title}"')
     
-    except JSONDecodeError as e:
+    except json.decoder.JSONDecodeError as e:
         print(e)
         add_to_log(e, 'error')
-        new_stories = 0
 
     return new_stories 
