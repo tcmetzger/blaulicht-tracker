@@ -46,6 +46,7 @@ def get_from_db(id):
     Retrieve story from db based on id
     Return: story as dict (return warning message if no story is found)
     """
+    id = str(id)
     if db.stories.find_one({'id': id}):
         return db.stories.find_one({'id': id})
     else:
