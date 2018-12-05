@@ -22,7 +22,7 @@ def includes_media(document):
     mediatype = set()
     if 'media' in document.keys():
         if 'image' in document['media'].keys():
-            stockpic_caption = re.compile(r'(Symbolbild)|(Logo Riegel vor)|(Riegel [vV]or)|(Logo)|(Kriminaldienstmarke)|(Wohnungseinbruchradar)|(Beispielbild)|(Logo: Brems Dich)|(Brems Dich)|(Verabschiedung)')
+            stockpic_caption = re.compile(r'(Symbolbild)|(Symbolfoto)|(Logo Riegel vor)|(Riegel [vV]or)|(Logo)|(Kriminaldienstmarke)|(Wohnungseinbruchradar)|(Beispielbild)|(Logo: Brems Dich)|(Brems Dich)|(Verabschiedung)')
             stockpic_titles = re.compile(r'(Tag der offenen Tür)|(Bürgerberatung)|(Infoveranstaltung)|(Einbruchradar)')
             # not  and or (re.search(stockpic_words, document['title']))
             if not (re.search(stockpic_caption, str(document['media']['image']))):
@@ -41,7 +41,7 @@ def includes_keyword(document):
     Check document for keywords
     Return True if keywords detected
     """
-    keywords = re.compile(r'(Gemeinsame Pressemitteilung)|(Gemeinsame Presseerklärung)|(staatsgefährdende(.|) Gewalttat)|(Leiche)|(terroristische(.|) Vereinigung)|(Staatsschutz)|(Kriegswaffenkontrollgesetz)|(Kraftfahrzeugrennen)|(Mordkommission)|([Ss]kurril)|([Ee]igenwillig)|([Kk]urios)|(Mutprobe)|(\w*)([Rr]ekord)|(Hygienem[äa]ngel)|(Lebensmittelkontrolle)|(Gammelfleisch)|(Lebensmittelhygienegesetz)|(Wucher)|(Massenanfall)|(Lebensretter)|(?=.*\bSachschaden\b)(?=.*\bMillion).*$|(?=.*\bWaffen\b)(?=.*\bsichergestellt).*$|(Abschlussbilanz)|(?=.*\bantisemitisch)(?=.*\bStraftat).*$|(?=.*\bSchultresor\b)(?=.*\bZeugnis).*$')
+    keywords = re.compile(r'(Gemeinsame Pressemitteilung)|(Gemeinsame Presseerklärung)|(staatsgefährdende(.|) Gewalttat)|(Leiche)|(terroristische(.|) Vereinigung)|(Staatsschutz)|(Kriegswaffenkontrollgesetz)|(Bahnbetriebsunfall)|(Kraftfahrzeugrennen)|(Mordkommission)|([Ll]eblose Person)|(Todesopfer)|([Ss]kurril)|([Ee]igenwillig)|([Kk]urios)|(Mutprobe)|(\w*)([Rr]ekord)|(Hygienem[äa]ngel)|(Lebensmittelkontrolle)|(Gammelfleisch)|(Lebensmittelhygienegesetz)|(Wucher)|(Massenanfall)|(Lebensretter)|(?=.*\bSachschaden\b)(?=.*\bMillion).*$|(?=.*\bWaffen\b)(?=.*\bsichergestellt).*$|(Gasaustritt)|(Explosion)|(Abschlussbilanz)|(?=.*\bantisemitisch)(?=.*\bStraftat).*$|(?=.*\bSchultresor\b)(?=.*\bZeugnis).*$')
     fulltext = document['title'] + ' \n' + document['body']
     return (re.search(keywords, fulltext))
 
@@ -61,7 +61,7 @@ def includes_brawl(document):
             return True
 
 def includes_animal(document):
-    animals = re.compile(r'(Ent(e|en)\b)|(Tierrettung)|((S|s)pinne(|n)\b)|(Skorpion)|(Igel)|(G(a|ä)ns)(\w*)|(Eichhörnchen)|(Schwan\b)|(Schwäne)|(Tierheim)|(Tierhilfe)|((k|K)aninchen\b)|((Würges|Gifts)chlange(|n)\b)|(\w*)([Ww]elpe)|(?=.*\bKatze)(?=.*\bgerettet).*$')
+    animals = re.compile(r'(Ent(e|en)\b)|(Tierrettung)|((S|s)pinne(|n)\b)|(Skorpion)|(Igel)|(G(a|ä)ns)(\w*)|(Eichhörnchen)|(Schwan\b)|(Schwäne)|(Tierheim)|(Tierhilfe)|((k|K)aninchen\b)|((Würges|Gifts)chlange(|n)\b)|(Reptilienexperte)|(Schlangenexperte)|(\w*)([Ww]elpe)|(?=.*\bKatze)(?=.*\bgerettet).*$')
     fulltext = document['title'] + ' \n' + document['body']
     return re.search(animals, fulltext)
 
