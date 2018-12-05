@@ -4,6 +4,7 @@ import time
 from datetime import datetime
 
 from config import STATE_FILTER, DELAY, DOWNLOAD_LIMIT
+from helpers.log_to_logfile import add_to_log
 import db
 import regex_filters
 
@@ -20,6 +21,7 @@ if __name__ == '__main__':
                 filter_result = regex_filters.check_filter(item)
                 if filter_result:
                     print(f'+++ {" ".join(str(s) for s in filter_result)} +++')
+                    add_to_log(f'{" ".join(str(s) for s in filter_result)}, {story["url"]}', 'info')
         else:
             print('No new stories found.')
         print(f'Sleeping for {DELAY} seconds.')

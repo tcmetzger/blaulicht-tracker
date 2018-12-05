@@ -6,7 +6,7 @@ import logging
 # Set up logging
 logging.basicConfig(filename='blaulicht_tracker.log',format='%(asctime)s %(levelname)s %(message)s',level=logging.DEBUG)
 
-def add_to_log(text, level):
+def add_to_log(text, level='debug'):
     """
     Log text with level
     """
