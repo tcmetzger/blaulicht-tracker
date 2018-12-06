@@ -3,7 +3,8 @@ Automatically monitor OTS Presseportal for new public service press releases (po
 
 ## Requirements
 - API-key to access data (environment variable)
-- MongoDB to store data
+- MongoDB to store data (DB_URI as environment variable)
+- For Slack capabilities: Bot-Token and Channel-ID (environment variable)
 
 ## Presseportal API
 Full documentation: https://api.presseportal.de/doc/
