@@ -76,7 +76,7 @@ def update (region, limit):
             #else:
                 #print(f'Already in db: "{story_title}"')
     
-    except json.decoder.JSONDecodeError as e:
+    except (json.decoder.JSONDecodeError, ConnectionResetError) as e:
         print(e)
         add_to_log(e, 'error')
 
