@@ -41,7 +41,7 @@ def includes_keyword(document):
     Check document for keywords
     Return True if keywords detected
     """
-    keywords = re.compile(r'(Gemeinsame Pressemitteilung)|(Gemeinsame Presseerklärung)|(Schusswaffengebrauch)|(staatsgefährdende(.|) Gewalttat)|(Leiche)|(terroristische(.|) Vereinigung)|(Staatsschutz)|(Kriegswaffenkontrollgesetz)|(Bahnbetriebsunfall)|(Kraftfahrzeugrennen)|(Mordkommission)|([Ll]eblose Person)|(Todesopfer)|([Ss]kurril)|([Ee]igenwillig)|([Kk]urios)|(Mutprobe)|(\w*)([Rr]ekord)|(Hygienem[äa]ngel)|(Lebensmittelkontrolle)|(Gammelfleisch)|(Lebensmittelhygienegesetz)|(Wucher)|(Massenanfall)|(Lebensretter)|(?=.*\bSachschaden\b)(?=.*\bMillion).*$|(?=.*\bWaffen\b)(?=.*\bsichergestellt).*$|(Gasaustritt)|(Explosion)|(Abschlussbilanz)|(?=.*\bantisemitisch)(?=.*\bStraftat).*$|(?=.*\bSchultresor\b)(?=.*\bZeugnis).*$')
+    keywords = re.compile(r'(Gemeinsame Pressemitteilung)|(Gemeinsame Presseerklärung)|(Schusswaffengebrauch)|(staatsgefährdende(.|) Gewalttat)|(Leiche)|(terroristische(.|) Vereinigung)|(Staatsschutz)|(Kriegswaffenkontrollgesetz)|(Bahnbetriebsunfall)|(Kraftfahrzeugrennen)|(Mordkommission)|([Ll]eblose Person)|(Todesopfer)|([Ss]kurril)|([Ee]igenwillig)|([Kk]urios)|(Mutprobe)|(\w*)([Rr]ekord)|(Hygienem[äa]ngel)|(Lebensmittelkontrolle)|(Gammelfleisch)|(Lebensmittelhygienegesetz)|(Wucher)|(Massenanfall)|(Lebensretter)|(?=.*\bSachschaden\b)(?=.*\bMillion).*$|(?=.*\bWaffen\b)(?=.*\bsichergestellt).*$|(Gasaustritt)|(Explosion)|(Störung öffentlicher Betriebe)|(Abschlussbilanz)|(?=.*\bantisemitisch)(?=.*\bStraftat).*$|(?=.*\bSchultresor\b)(?=.*\bZeugnis).*$')
     fulltext = document['title'] + ' \n' + document['body']
     return (re.search(keywords, fulltext))
 
