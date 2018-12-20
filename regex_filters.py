@@ -23,7 +23,7 @@ def includes_media(document):
     if 'media' in document.keys():
         if 'image' in document['media'].keys():
             stockpic_caption = re.compile(r'(Symbolbild)|(Symbolfoto)|(Archivbild)|(Archivfoto)|(Logo Riegel vor)|(Riegel [vV]or)|(Logo)|(Kriminaldienstmarke)|(Wohnungseinbruchradar)|(Einbruchradar)|(Einbruchsradar)|(Beispielbild)|(Logo: Brems Dich)|(Brems Dich)|(Verabschiedung)')
-            stockpic_titles = re.compile(r'(Blitzerradar)|(Blitzermeldung)|(Tag der offenen Tür)|(Bürgerberatung)|(Infoveranstaltung)|(Einbruchradar)|(Einbruchsradar)|(Wohnungseinbruchradar)|(Fachtagung)|(Ehrung)|(Ehrenabteilung)|(Jahresdienstbesprechung)')
+            stockpic_titles = re.compile(r'(Blitzerradar)|(Blitzermeldung)|(Tag der offenen Tür)|(Bürgerberatung)|(Infoveranstaltung)|(Einbruchradar)|(Einbruchsradar)|(Wohnungseinbruchradar)|(Fachtagung)|(Ehrung)|(Ehrenabteilung)|(Jahresdienstbesprechung)|(?=.*\bGeschwindigkeitsmessung)(?=.*\bKW).*$')
             # not  and or (re.search(stockpic_words, document['title']))
             if not (re.search(stockpic_caption, str(document['media']['image']))):
                 if not (re.search(stockpic_titles, document['title'])):
