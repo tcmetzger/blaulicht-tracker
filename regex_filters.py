@@ -23,7 +23,7 @@ def includes_media(document):
     if 'media' in document.keys():
         if 'image' in document['media'].keys():
             stockpic_caption = re.compile(r'(Symbolbild)|(Symbolfoto)|(Archivbild)|(Archivfoto)|(Logo Riegel vor)|(Riegel [vV]or)|(Logo)|(Kriminaldienstmarke)|(Wohnungseinbruchradar)|(Einbruchradar)|(Einbruchsradar)|(Beispielbild)|(Logo: Brems Dich)|(Brems Dich)|(Verabschiedung)')
-            stockpic_titles = re.compile(r'(Blitzerradar)|(Blitzermeldung)|(Tag der offenen Tür)|(Benefizkonzert)|(Bürgerberatung)|(Infoveranstaltung)|(Einbruchradar)|(Einbruchsradar)|(Wohnungseinbruchradar)|(Fachtagung)|(Ehrung)|(Ehrenabteilung)|(Jahresdienstbesprechung)|(?=.*\b(Feier|Fest)tage)(?=.*\bwünscht).*$|(Geschwindigkeitskontrollen)|(Geschwindigkeitsmessungen der)|(?=.*\bGeschwindigkeitsmessung)(?=.*\bKW).*$')
+            stockpic_titles = re.compile(r'(Blitzerradar)|(Blitzermeldung)|(Tag der offenen Tür)|(Benefizkonzert)|(Bürgerberatung)|(Infoveranstaltung)|(Einbruchradar)|(Einbruchsradar)|(Wohnungseinbruchradar)|(Wohnungs-Einbruchs-Radar)|(Fachtagung)|(Fachkongress)|(Ehrung)|(Ehrenabteilung)|((n|N)ach).*(Dienstjahren).*(geht)|(Jahresdienstbesprechung)|(?=.*\b(Feier|Fest)tage)(?=.*\bwünscht).*$|(Geschwindigkeitskontrollen)|(Geschwindigkeitsmessungen der)|(?=.*\bGeschwindigkeitsmessung)(?=.*\bKW).*$')
             # not  and or (re.search(stockpic_words, document['title']))
             if not (re.search(stockpic_caption, str(document['media']['image']))):
                 if not (re.search(stockpic_titles, document['title'])):
@@ -41,7 +41,7 @@ def includes_keyword(document):
     Check document for keywords
     Return True if keywords detected
     """
-    keywords = re.compile(r'(Gemeinsame Pressemitteilung)|(Gemeinsame Presseerklärung)|(Schusswaffengebrauch)|(staatsgefährdende(.|) Gewalttat)|(Leiche)|(terroristische(.|) Vereinigung)|(Staatsschutz)|(Kriegswaffenkontrollgesetz)|(Bahnbetriebsunfall)|(Kraftfahrzeugrennen)|(Mordkommission)|([Ll]eblose Person)|(Todesopfer)|([Ss]kurril)|([Ee]igenwillig)|([Kk]urios)|(Mutprobe)|(\w*)([Rr]ekord)|(Hygienem[äa]ngel)|(Lebensmittelkontrolle)|(Gammelfleisch)|(Lebensmittelhygienegesetz)|(Wucher)|(Massenanfall)|(Lebensretter)|(?=.*\bSachschaden\b)(?=.*\bMillion).*$|(?=.*\bWaffen\b)(?=.*\bsichergestellt).*$|(Gasaustritt)|((E|e)xplosion)|(Blanko-Dokumente)|(Störung öffentlicher Betriebe)|(Abschlussbilanz)|(?=.*\bSpitzenreiter)(?=.*\bkm).*$|(?=.*\bantisemitisch)(?=.*\bStraftat).*$|(?=.*\bSchultresor\b)(?=.*\bZeugnis).*$')
+    keywords = re.compile(r'(Gemeinsame Pressemitteilung)|(Gemeinsame Presseerklärung)|(Schusswaffengebrauch)|(staatsgefährdende(.|) Gewalttat)|(Leiche)|(terroristische(.|) Vereinigung)|(Staatsschutz)|(Kriegswaffenkontrollgesetz)|(Bahnbetriebsunfall)|(Kraftfahrzeugrennen)|((i|I)llegale(.|)) (Autorennen)|(Mordkommission)|([Ll]eblose Person)|(Todesopfer)|([Ss]kurril)|([Ee]igenwillig)|([Kk]urios)|(Mutprobe)|(\w*)([Rr]ekord)|(Hygienem[äa]ngel)|(Lebensmittelkontrolle)|(Gammelfleisch)|(Lebensmittelhygienegesetz)|(Wucher)|(Massenanfall)|(Lebensretter)|(?=.*\bSachschaden\b)(?=.*\bMillion).*$|(?=.*\bWaffen\b)(?=.*\bsichergestellt).*$|(Gasaustritt)|((E|e)xplosion)|(Blanko-Dokumente)|(Störung öffentlicher Betriebe)|(Abschlussbilanz)|(?=.*\bSpitzenreiter)(?=.*\bkm).*$|(?=.*\bantisemitisch)(?=.*\bStraftat).*$|(?=.*\bSchultresor\b)(?=.*\bZeugnis).*$')
     fulltext = document['title'] + ' \n' + document['body']
     return (re.search(keywords, fulltext))
 
