@@ -6,8 +6,8 @@ import re
 import db
 
 def includes_severe_accident(document):
-    unfall1 = re.compile(r'(?=.*(u|U)nfall\b)(?=.*\btödlich).*$')
-    unfall2 = re.compile(r'((A|a)utobahn).*$')
+    unfall1 = re.compile(r'((T|t)ödlich).*((U|u)nfall)|((U|u)nfall).*((T|t)ödlich)')
+    unfall2 = re.compile(r'((A|a)utobahn)')
     text = document['title'] + ' \n' + document['body']
     if (re.search(unfall1,text)) and (re.search(unfall2,text)):
         return True
@@ -41,7 +41,7 @@ def includes_keyword(document):
     Check document for keywords
     Return True if keywords detected
     """
-    keywords = re.compile(r'((G|g)emeinsame(|\w) Pressemitteilung)|((G|g)emeinsame(|\w) Presseerklärung)|(Schusswaffengebrauch)|((s|S)taatsgefährdende(.|) (Gewalt|Straf)tat)|(Leiche)|(terroristische(.|) Vereinigung)|(Kennzeichen (einer |)verfassungswidrige(r|n) Organisation(|en))|(Staatsschutz)|(Kriegswaffenkontrollgesetz)|(Bahnbetriebsunfall)|(((Linien|Reise)bus).{0,90}(erletzte).*(Krankenh(a|ä)us))|(((Linien|Reise|Schul)bus)|(Sattelzug)|(Fahrzeug)|(Tax(i|en))|.{0,150}(stillgelegt))|(Kraftfahrzeugrennen)|((i|I)llegale(.|)) (Autorennen)|(Säure(-|)(A|a)ngriff)|(Säure(-|)(A|a)nschlag)|(Mordkommission)|([Ll]eblose Person)|(Todesopfer)|([Ss]kurril)|([Ee]igenwillig)|([Kk]urios)|(Mutprobe)|(\w*)([Rr]ekord)|(Hygienem[äa]ngel)|(Lebensmittelkontrolle)|(Gammelfleisch)|(Lebensmittelhygienegesetz)|(Wucher)|(Massenanfall)|(Lebensretter)|(Sachsch(a|ä)den).*(Million)|((Schussw|W)affen).{0,60}(sichergestellt)|(Gasaustritt)|((E|e)xplosion)|(Blanko-Dokumente)|(Störung öffentlicher Betriebe)|(Abschlussbilanz)|(?=.*\bSpitzenreiter)(?=.*\bkm).*$|(?=.*\bantisemitisch)(?=.*\bStraftat).*$|(?=.*\bSchultresor\b)(?=.*\bZeugnis).*$|(Paketzustell).*(nterschlagung)|(Hochhausbrand)|(Anwohner).{0,200}(Türen und Fenster geschlossen)|((Starkregen).*(berschwemm))')
+    keywords = re.compile(r'((G|g)emeinsame(|\w) Pressemitteilung)|((G|g)emeinsame(|\w) Presseerklärung)|(Schusswaffengebrauch)|((s|S)taatsgefährdende(.|) (Gewalt|Straf)tat)|(Leiche)|(terroristische(.|) Vereinigung)|(Kennzeichen (einer |)verfassungswidrige(r|n) Organisation(|en))|(Staatsschutz)|(Kriegswaffenkontrollgesetz)|(Bahnbetriebsunfall)|(((Linien|Reise)bus).{0,90}(erletzte).*(Krankenh(a|ä)us))|(Kraftfahrzeugrennen)|((i|I)llegale(.|)) (Autorennen)|(Säure(-|)(A|a)ngriff)|(Säure(-|)(A|a)nschlag)|(Mordkommission)|([Ll]eblose Person)|(Todesopfer)|([Ss]kurril)|([Ee]igenwillig)|([Kk]urios)|(Mutprobe)|(\w*)([Rr]ekord)|(Hygienem[äa]ngel)|(Lebensmittelkontrolle)|(Gammelfleisch)|(Lebensmittelhygienegesetz)|(Wucher)|(Massenanfall)|(Lebensretter)|(Sachsch(a|ä)den).*(Million)|((Schussw|W)affen).{0,60}(sichergestellt)|(Gasaustritt)|((E|e)xplosion)|(Blanko-Dokumente)|(Störung öffentlicher Betriebe)|(Abschlussbilanz)|(?=.*\bSpitzenreiter)(?=.*\bkm).*$|(?=.*\bantisemitisch)(?=.*\bStraftat).*$|(?=.*\bSchultresor\b)(?=.*\bZeugnis).*$|(Paketzustell).*(nterschlagung)|(Hochhausbrand)|(Anwohner).{0,200}(Türen und Fenster geschlossen)|((Starkregen).*(berschwemm))')
     fulltext = document['title'] + ' \n' + document['body']
     return (re.search(keywords, fulltext))
 
