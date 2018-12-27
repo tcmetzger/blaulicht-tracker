@@ -41,7 +41,7 @@ def includes_keyword(document):
     Check document for keywords
     Return True if keywords detected
     """
-    keywords = re.compile(r'((G|g)emeinsame(|\w) Pressemitteilung)|((G|g)emeinsame(|\w) Presseerklärung)|(Schusswaffengebrauch)|(Schussabgabe)|((s|S)taatsgefährdende(.|) (Gewalt|Straf)tat)|(Leiche)|(terroristische(.|) Vereinigung)|(Kennzeichen (einer |)verfassungswidrige(r|n) Organisation(|en))|(Staatsschutz)|(Kriegswaffenkontrollgesetz)|(Bahnbetriebsunfall)|(((Linien|Reise)bus).{0,90}(erletzte).*(Krankenh(a|ä)us))|(Kraftfahrzeugrennen)|((i|I)llegale(.|)) (Autorennen)|(Säure(-|)(A|a)ngriff)|(Säure(-|)(A|a)nschlag)|(Mordkommission)|([Ll]eblose Person)|(Todesopfer)|([Ss]kurril)|([Ee]igenwillig)|([Kk]urios)|([Ii]ns Staunen)|(Mutprobe)|(\w*)([Rr]ekord)|(Hygienem[äa]ngel)|(Lebensmittelkontrolle)|(Gammelfleisch)|(Lebensmittelhygienegesetz)|(Wucher)|(Massenanfall)|(Lebensretter)|(Sachsch(a|ä)den).*(Million)|((Schussw|W)affen).{0,60}(sichergestellt)|(Gasaustritt)|((E|e)xplosion)|(Blanko-Dokumente)|(Störung öffentlicher Betriebe)|(Abschlussbilanz)|(?=.*\bSpitzenreiter)(?=.*\bkm).*$|(?=.*\bantisemitisch)(?=.*\bStraftat).*$|(?=.*\bSchultresor\b)(?=.*\bZeugnis).*$|(Paketzustell).*(nterschlagung)|(Gefahrstoffzug)|(Chemikalienschutzanzug)|(ABC-(Dienst|Einsatz))|(Gefahrstoffmessung)|(Hochhausbrand)|(Anwohner).{0,200}(Türen und Fenster geschlossen)|((Starkregen).*(berschwemm))')
+    keywords = re.compile(r'((G|g)emeinsame(|\w) Pressemitteilung)|((G|g)emeinsame(|\w) Presseerklärung)|(Schusswaffengebrauch)|(Schussabgabe)|((s|S)taatsgefährdende(.|) (Gewalt|Straf)tat)|([Ll]eiche(|n)\b)|(terroristische(.|) Vereinigung)|(Kennzeichen (einer |)verfassungswidrige(r|n) Organisation(|en))|(Staatsschutz)|(Kriegswaffenkontrollgesetz)|(Bahnbetriebsunfall)|(((Linien|Reise)bus).{0,90}(erletzte).*(Krankenh(a|ä)us))|(Kraftfahrzeugrennen)|((i|I)llegale(.|)) (Autorennen)|(Säure(-|)(A|a)ngriff)|(Säure(-|)(A|a)nschlag)|(Mordkommission)|([Ll]eblose Person)|(Todesopfer)|([Ss]kurril)|([Ee]igenwillig)|([Kk]urios)|([Ii]ns Staunen)|(Mutprobe)|(\w*)([Rr]ekord)|(Hygienem[äa]ngel)|(Lebensmittelkontrolle)|(Gammelfleisch)|(Lebensmittelhygienegesetz)|(Wucher)|(Massenanfall)|(Lebensretter)|(Sachsch(a|ä)den).*(Million)|((Schussw|W)affen).{0,60}(sichergestellt)|(Gasaustritt)|((E|e)xplosion)|(Blanko-Dokumente)|(Störung öffentlicher Betriebe)|(Abschlussbilanz)|(?=.*\bSpitzenreiter)(?=.*\bkm).*$|(?=.*\bantisemitisch)(?=.*\bStraftat).*$|(?=.*\bSchultresor\b)(?=.*\bZeugnis).*$|(Paketzustell).*(nterschlagung)|(Gefahrstoffzug)|(Chemikalienschutzanz[uü]g)|(ABC-(Dienst|Einsatz))|(Gefahrstoffmessung)|(Gefahrguteinsatz)|(Hochhausbrand)|(Anwohner).{0,200}(Türen und Fenster geschlossen)|((Starkregen).*(berschwemm))')
     fulltext = document['title'] + ' \n' + document['body']
     return (re.search(keywords, fulltext))
 
@@ -80,8 +80,10 @@ def check_filter(ots_id):
     if media:
         filters.add(f'Media ({(media)})')
 
-    if includes_keyword(document):  
-        filters.add('Keyword')
+    key_test = includes_keyword(document)
+    if key_test:
+        found_keyword = key_test.group(0)
+        filters.add(f'Keyword: {found_keyword}')
 
     if includes_planecrash(document):
         filters.add('Planecrash')
