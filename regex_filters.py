@@ -21,15 +21,15 @@ def includes_media(document):
     """
     mediatype = set()
     if 'media' in document.keys():
+        exclude_titles = re.compile(r'(( plane).*(Geschwindigkeits(|-)(k|K)ontrollen))|((Geschwindigkeits(|-)(k|K)ontrollen).*((nächste.* Woche)|( plane)))|(Blitzerradar)|(Blitzermeldung)|(Tag der offenen Tür)|(Benefizkonzert)|(Bürgerberatung)|(Infoveranstaltung)|((E|e)inbruch(|s)(r|-R)adar)|(Fachtagung)|(Fachkongress)|(Jahreshauptversammlung)|(Ehrung)|(Ehrenabteilung)|((n|N)ach).*(Dienstjahren).*(geht)|(Jahresdienstbesprechung)|(?=.*\b(Feier|Fest)tage)(?=.*\bwünscht).*$|(Geschwindigkeitskontrollen)|(Geschwindigkeitsmessungen der)|(?=.*\bGeschwindigkeitsmessung)(?=.*\bKW).*$')
         if 'image' in document['media'].keys():
             stockpic_caption = re.compile(r'(Symbolbild)|(Symbolfoto)|(Archivbild)|(Archivfoto)|(Logo Riegel vor)|(Riegel [vV]or)|(Logo)|(Kriminaldienstmarke)|(Wohnungseinbruchradar)|(Einbruchradar)|(Einbruchsradar)|(Beispielbild)|(Logo: Brems Dich)|(Brems Dich)|(Verabschiedung)')
-            stockpic_titles = re.compile(r'(( plane).*(Geschwindigkeits(|-)(k|K)ontrollen))|((Geschwindigkeits(|-)(k|K)ontrollen).*((nächste.* Woche)|( plane)))|(Blitzerradar)|(Blitzermeldung)|(Tag der offenen Tür)|(Benefizkonzert)|(Bürgerberatung)|(Infoveranstaltung)|(Einbruchradar)|(Einbruchsradar)|(Wohnungseinbruchradar)|(Wohnungs-Einbruchs-Radar)|(Fachtagung)|(Fachkongress)|(Jahreshauptversammlung)|(Ehrung)|(Ehrenabteilung)|((n|N)ach).*(Dienstjahren).*(geht)|(Jahresdienstbesprechung)|(?=.*\b(Feier|Fest)tage)(?=.*\bwünscht).*$|(Geschwindigkeitskontrollen)|(Geschwindigkeitsmessungen der)|(?=.*\bGeschwindigkeitsmessung)(?=.*\bKW).*$')
-            # not  and or (re.search(stockpic_words, document['title']))
             if not (re.search(stockpic_caption, str(document['media']['image']))):
-                if not (re.search(stockpic_titles, document['title'])):
+                if not (re.search(exclude_titles, document['title'])):
                     mediatype.add('Image')
         if 'document' in document['media'].keys():
-            mediatype.add('Document')
+            if not (re.search(stockpic_titles, document['title'])):
+                mediatype.add('Document')
         if 'audio' in document['media'].keys():
             mediatype.add('Audio')
         if 'video' in document['media'].keys():
@@ -41,7 +41,7 @@ def includes_keyword(document):
     Check document for keywords
     Return True if keywords detected
     """
-    keywords = re.compile(r'((G|g)emeinsame(|\w) Pressemitteilung)|((G|g)emeinsame(|\w) Presseerklärung)|(Schusswaffengebrauch)|((s|S)taatsgefährdende(.|) (Gewalt|Straf)tat)|(Leiche)|(terroristische(.|) Vereinigung)|(Kennzeichen (einer |)verfassungswidrige(r|n) Organisation(|en))|(Staatsschutz)|(Kriegswaffenkontrollgesetz)|(Bahnbetriebsunfall)|(((Linien|Reise)bus).{0,90}(erletzte).*(Krankenh(a|ä)us))|(Kraftfahrzeugrennen)|((i|I)llegale(.|)) (Autorennen)|(Säure(-|)(A|a)ngriff)|(Säure(-|)(A|a)nschlag)|(Mordkommission)|([Ll]eblose Person)|(Todesopfer)|([Ss]kurril)|([Ee]igenwillig)|([Kk]urios)|(Mutprobe)|(\w*)([Rr]ekord)|(Hygienem[äa]ngel)|(Lebensmittelkontrolle)|(Gammelfleisch)|(Lebensmittelhygienegesetz)|(Wucher)|(Massenanfall)|(Lebensretter)|(Sachsch(a|ä)den).*(Million)|((Schussw|W)affen).{0,60}(sichergestellt)|(Gasaustritt)|((E|e)xplosion)|(Blanko-Dokumente)|(Störung öffentlicher Betriebe)|(Abschlussbilanz)|(?=.*\bSpitzenreiter)(?=.*\bkm).*$|(?=.*\bantisemitisch)(?=.*\bStraftat).*$|(?=.*\bSchultresor\b)(?=.*\bZeugnis).*$|(Paketzustell).*(nterschlagung)|(Hochhausbrand)|(Anwohner).{0,200}(Türen und Fenster geschlossen)|((Starkregen).*(berschwemm))')
+    keywords = re.compile(r'((G|g)emeinsame(|\w) Pressemitteilung)|((G|g)emeinsame(|\w) Presseerklärung)|(Schusswaffengebrauch)|(Schussabgabe)|((s|S)taatsgefährdende(.|) (Gewalt|Straf)tat)|(Leiche)|(terroristische(.|) Vereinigung)|(Kennzeichen (einer |)verfassungswidrige(r|n) Organisation(|en))|(Staatsschutz)|(Kriegswaffenkontrollgesetz)|(Bahnbetriebsunfall)|(((Linien|Reise)bus).{0,90}(erletzte).*(Krankenh(a|ä)us))|(Kraftfahrzeugrennen)|((i|I)llegale(.|)) (Autorennen)|(Säure(-|)(A|a)ngriff)|(Säure(-|)(A|a)nschlag)|(Mordkommission)|([Ll]eblose Person)|(Todesopfer)|([Ss]kurril)|([Ee]igenwillig)|([Kk]urios)|([Ii]ns Staunen)|(Mutprobe)|(\w*)([Rr]ekord)|(Hygienem[äa]ngel)|(Lebensmittelkontrolle)|(Gammelfleisch)|(Lebensmittelhygienegesetz)|(Wucher)|(Massenanfall)|(Lebensretter)|(Sachsch(a|ä)den).*(Million)|((Schussw|W)affen).{0,60}(sichergestellt)|(Gasaustritt)|((E|e)xplosion)|(Blanko-Dokumente)|(Störung öffentlicher Betriebe)|(Abschlussbilanz)|(?=.*\bSpitzenreiter)(?=.*\bkm).*$|(?=.*\bantisemitisch)(?=.*\bStraftat).*$|(?=.*\bSchultresor\b)(?=.*\bZeugnis).*$|(Paketzustell).*(nterschlagung)|(Gefahrstoffzug)|(Chemikalienschutzanzug)|(ABC-(Dienst|Einsatz))|(Gefahrstoffmessung)|(Hochhausbrand)|(Anwohner).{0,200}(Türen und Fenster geschlossen)|((Starkregen).*(berschwemm))')
     fulltext = document['title'] + ' \n' + document['body']
     return (re.search(keywords, fulltext))
 
@@ -61,7 +61,7 @@ def includes_brawl(document):
             return True
 
 def includes_animal(document):
-    animals = re.compile(r'(Ent(e|en)\b)|(Truthahn)|((Elefant|Zebra|Löwe|Löwin|Raubkatze|Nashorn|Vogelstrauß).*(Zirkus|Zoo|Tierpark))|(Tierrettung)|((S|s)pinne(|n)\b)|(Skorpion)|(Igel)|(G(a|ä)ns)(\w*)|(Eichhörnchen)|(Schwan\b)|(Schwäne)|(Tierheim)|(Tierhilfe)|((k|K)aninchen\b)|((Würges|Gifts)chlange(|n)\b)|(Reptilienexperte)|(Schlangenexperte)|(tierärztlich.{0,2}\b)(Untersuchung)|(\w*)([Ww]elpe)|(?=.*\bKatze)(?=.*\bgerettet).*$')
+    animals = re.compile(r'(Ent(e|en)\b)|(Truthahn)|((Elefant|Zebra|Löwe|Löwin|Raubkatze|Nashorn|Vogelstrauß).*(Zirkus|Zoo|Tierpark))|(Tierrettung)|((S|s)pinne(|n)\b)|(Skorpion)|(Igel)|(G(a|ä)ns)(\w*)|(Eichhörnchen)|(Schwan\b)|(Schwäne)|(Tierheim)|(Tierhilfe)|((k|K)aninchen\b)|((Würges|Gifts)chlange(|n)\b)|(Reptilienexperte)|(Schlangenexperte)|([Vv]eterinäramt)|(tierärztlich.{0,2}\b)(Untersuchung)|(\w*)([Ww]elpe)|(?=.*\bKatze)(?=.*\bgerettet).*$')
     fulltext = document['title'] + ' \n' + document['body']
     return re.search(animals, fulltext)
 
