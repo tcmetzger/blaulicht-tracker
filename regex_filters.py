@@ -1,15 +1,31 @@
 #!/user/bin/env python3.6
-# TBD: make filters configurable, not hard coded
-# These filters are just examples and need to be adapted as need
+# The filters in this file are just examples and need to be adapted as need
+# Regex can optionally be placed in external file. See function check_for_file 
 
 import re 
+from pathlib import Path
 
 import db
 
+def check_for_file(key):
+    """
+    Check if file key.regex exists and load regex from file
+    Return loaded regex - return empty string if no file present
+    """
+    filepath = f'{key}.regex'
+    my_file = Path(filepath)
+    if my_file.is_file():
+        with open(filepath, 'r') as regex_storage:  
+                regex = regex_storage.read()
+    else:
+        regex = ''
+    return regex
+
 def includes_severe_accident(document):
-    unfall1 = re.compile(r'((T|t)ödlich).*((U|u)nfall)|((U|u)nfall).*((T|t)ödlich)')
+    unfall1 = re.compile(r'((T|t)ödlich).*((U|u)nfall)|((U|u)nfall).*((T|t)ödlich)|(Vollsperrung)')
     unfall2 = re.compile(r'((A|a)utobahn)')
     text = document['title'] + ' \n' + document['body']
+    text = ' '.join(text.split())
     if (re.search(unfall1,text)) and (re.search(unfall2,text)):
         return True
     else:
@@ -39,17 +55,21 @@ def includes_media(document):
 
 def includes_keyword(document):
     """
-    Check document for keywords
+    Check document for keywords (load regex from file if exists)
     Return True if keywords detected
     """
-    keywords = re.compile(r'((G|g)emeinsame(|\w) Pressemitteilung)|(Autorennen)|(Lebensretter)')
+    keywords = check_for_file('keywords')
+    if len(keywords) < 1:
+        keywords = re.compile(r'((G|g)emeinsame(|\w) Pressemitteilung)|(Autorennen)|(Lebensretter)')
     fulltext = document['title'] + ' \n' + document['body']
+    fulltext = ' '.join(fulltext.split())
     return (re.search(keywords, fulltext))
 
 def includes_planecrash(document):
     crash = re.compile(r'(Absturz)|(abgestürzt)(\w*)')
     airplane = re.compile(r'(\w*)([Ff]lugzeug)|(Doppeldecker)|(Hubschrauber)|(\w*)([Ll]eichtflieger)')    
     fulltext = document['title'] + ' \n' + document['body']
+    fulltext = ' '.join(fulltext.split())
     if (re.search(crash, fulltext)):
         if (re.search(airplane, fulltext)):
             return True
@@ -58,12 +78,14 @@ def includes_planecrash(document):
       
 def includes_brawl(document):
     fulltext = document['title'] + ' \n' + document['body']
+    fulltext = ' '.join(fulltext.split())
     if (re.search(re.compile(r'Schlägerei'),fulltext)) and (re.search(re.compile(r'(Gruppe(.|))'),fulltext)) and (re.search(re.compile(r'((V|v)erletzt)'),fulltext)):
             return True
 
 def includes_animal(document):
     animals = re.compile(r'(Ent(e|en)\b)|((Elefant|Zebra|Löwe|Löwin|Raubkatze|Nashorn|Vogelstrauß).*(Zirkus|Zoo|Tierpark))|(Tierrettung)')
     fulltext = document['title'] + ' \n' + document['body']
+    fulltext = ' '.join(fulltext.split())
     return re.search(animals, fulltext)
 
 def check_filter(ots_id):
